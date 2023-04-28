@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Statement;
+import java.sql.ResultSet;
 @WebServlet(urlPatterns = {"/RegisterServlet"})
 public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -26,9 +28,18 @@ public class RegisterServlet extends HttpServlet {
                    </html>                   
                    """;
         String db = "jdbc:mariadb://localhost/gotvarstvo";
+        String reqName;
+        String reqPass;
+        String reqMail;
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Connection conn = DriverManager.getConnection(db);
+            Statement stmt = conn.createStatement();
+            String query = """
+                           INSERT INTO potrebiteli(name, pass, mail)
+                           VALUES (\"fasfa\", \"dfafawf\", \"sfagaw\");
+                           """;
+            ResultSet rs = stmt.executeQuery(query);
         } catch (SQLException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
